@@ -1,5 +1,8 @@
 class Contact < ApplicationRecord
+
+  #assossiations
   belongs_to :kind, optional: true
+  has_many :phones
 
   def get_date
     Time.now.to_s

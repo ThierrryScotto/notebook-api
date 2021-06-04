@@ -13,7 +13,6 @@ namespace :dev do
     puts "Cadastrando contatos"
     
     100.times do |i|
-      puts "#{i} - 100"
       Contact.create!(
         name: Faker::Name.name,
         email: Faker::Internet.email,
@@ -22,6 +21,17 @@ namespace :dev do
       )
     end
     puts "Contatos cadastrados com sucesso"
+
+    puts "Cadastrando telefones"
+    
+    Contact.all.each do |contact|
+      rand(5).times do |i|      
+        phone = Phone.create!(number: Faker::PhoneNumber.cell_phone)
+        contact.phones << phone
+        contact.save
+      end
+    end
+    puts "Telefones cadastrados com sucesso"
 
   end
 end
