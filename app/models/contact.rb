@@ -2,9 +2,12 @@ class Contact < ApplicationRecord
 
   #assossiations
   belongs_to :kind, optional: true
-  has_many :phones
   
+  has_many :phones
   accepts_nested_attributes_for :phones, allow_destroy: true
+
+  has_one :address
+  accepts_nested_attributes_for :address
 
   def get_date
     Time.now.to_s
@@ -22,7 +25,7 @@ class Contact < ApplicationRecord
     h = super(
       except: [:kind_id],
       methods: [:kind_descrption, :default_locale],
-      include: :phones
+      include: [:phones, :address]
     )
 
     h[:birthdate] = I18n.l(self.birthdate) unless self.birthdate.blank?
