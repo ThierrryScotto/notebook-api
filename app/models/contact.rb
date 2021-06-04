@@ -16,22 +16,14 @@ class Contact < ApplicationRecord
     I18n.default_locale
   end
 
-  def to_br
-    { 
-      id: self.id,
-      name: self.name,
-      birthdate: I18n.l(self.birthdate),
-      email: self.email
-    }
-  end
-
   def as_json (options={})
-    super(
-      root: true, 
+    h = super(
       except: [:kind_id],
-      methods: [:kind_descrption, :default_locale]
-      # include: { kind: { only: :description } } Dessa forma a hash é aninhada dentro da estrutura
-      # include: :kind
+      methods: [:kind_descrption, :default_locale],
+      include: :phones
     )
+
+    h[:birthdate] = I18n.l(self.birthdate) unless self.birthdate.blank?
+    h
   end
 end
