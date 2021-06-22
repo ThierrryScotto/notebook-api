@@ -1,5 +1,10 @@
 class ContactSerializer < ActiveModel::Serializer
-  attributes :id, :name, :email, :birthdate, :kind_id
+  attributes :id, :name, :email, :birthdate
+
+  #assossiations
+  belongs_to :kind, optional: true
+  has_many :phones
+  has_one :address
 
   def attributes(*args)
     h = super(*args)
