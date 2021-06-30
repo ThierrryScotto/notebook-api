@@ -1,0 +1,1 @@
+rs: rails s -p 3000

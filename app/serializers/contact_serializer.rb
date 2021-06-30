@@ -12,7 +12,8 @@ class ContactSerializer < ActiveModel::Serializer
 
   meta do
     { 
-      locale: I18n.locale
+      locale: I18n.locale,
+      size: Contact.all.size
     } 
   end
 
