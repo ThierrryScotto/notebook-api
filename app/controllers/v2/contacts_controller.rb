@@ -1,18 +1,17 @@
 module V2
-  class ContactsController < ApplicationController 
-    # before_action :authenticate_user!
+  class ContactsController < ApplicationController
     before_action :set_contact, only: [:show, :update, :destroy]
 
     # GET /contacts
     def index
-      @contacts = Contact.last(5)
+      @contacts = Contact.all
 
       render json: @contacts
     end
 
     # GET /contacts/1
     def show
-      render json: @contact
+      render json: @contact, include: [:kind]
     end
 
     # POST /contacts
@@ -33,7 +32,7 @@ module V2
       else
         render json: @contact.errors, status: :unprocessable_entity
       end
-    end 
+    end
 
     # DELETE /contacts/1
     def destroy
@@ -48,11 +47,7 @@ module V2
 
     # Only allow a list of trusted parameters through.
     def contact_params
-      params.require(:contact).permit(
-        :name, :email, :birthdate, :kind_id,
-        phones_attributes: [:id, :number, :_destroy],
-        address_attributes: [:id, :street, :city]
-      )
+      ActiveModelSerializers::Deserialization.jsonapi_parse(params)
     end
   end
 end
