@@ -5,9 +5,9 @@ module V2
 
     # GET /contacts
     def index
-      @contacts = Contact.last(5)
+      @contacts = Contact.all.page(params[:page])
 
-      render json: @contacts
+      paginate json: @contacts
     end
 
     # GET /contacts/1
