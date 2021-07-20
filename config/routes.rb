@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
   mount_devise_token_auth_for 'User', at: 'auth'
   
-  scope module: 'v1' do
-    resources :contacts, :constraints => lambda { |request| request.params[:version] == '1' }
+  api_version(:module => "V1", :path => {:value => "v1"}) do
+    resources :contacts
   end
 
-  scope module: 'v2' do
-    resources :contacts, :constraints => lambda { |request| request.params[:version] == '2' }
+  api_version(:module => "V2", :path => {:value => "v2"}) do
+    resources :contacts
   end
 
   resources :kinds
