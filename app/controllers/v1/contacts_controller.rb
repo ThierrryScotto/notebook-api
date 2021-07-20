@@ -1,6 +1,6 @@
 module V1
   class ContactsController < ApplicationController 
-    # before_action :authenticate_user!
+    before_action :authenticate_user!
     before_action :set_contact, only: [:show, :update, :destroy]
 
     # GET /contacts
